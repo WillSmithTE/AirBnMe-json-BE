@@ -1,0 +1,30 @@
+{
+  "name": "airbnme-json-be",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "json-schema-faker": "^0.5.0-rc17",
+    "json-server": "^0.15.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-mockapi": "json-server --watch db.json --port 8080",
+    "prestart-mockapi": "node generate-data"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "bruno",
+      "email": "bruno@email.com",
+      "password": "bruno"
+    },
+    {
+      "id": 1,
+      "name": "techie",
+      "email": "techie@email.com",
+      "password": "techie"
+    },
+    {
+      "id": 2,
+      "name": "nilson",
+      "email": "nilson@email.com",
+      "password": "nilson"
+    },
+    {
+      "id": 3,
+      "name": "Herpy Derp",
+      "email": "email@gmail.com",
+      "password": "derp"
+    },
+    {
+      "email": "newguy@gmail.com",
+      "password": "newPassword1",
+      "name": "New Guy",
+      "id": 4
+    },
+    {
+      "email": "newguy2@gmail.com",
+      "password": "newPassword2",
+      "name": "New Guy 2",
+      "id": 5
+    }
+  ]
+}
