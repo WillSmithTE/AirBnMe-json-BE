@@ -9,9 +9,6 @@
   },
   "scripts": {
     "start": "node ./server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "start-mockapi": "json-server --watch db.json --port 8080",
     "prestart-mockapi": "node generate-data"
   },
