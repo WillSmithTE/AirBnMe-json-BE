@@ -35,6 +35,48 @@
       "password": "newPassword2",
       "name": "New Guy 2",
       "id": 5
+    },
+    {
+      "email": "willsmithte@gmail.com",
+      "password": "herpderp",
+      "name": "William T Smith",
+      "id": 6
+    },
+    {
+      "email": "herpaderpa@gmail.com",
+      "password": "herpderp",
+      "name": "herpa derpa",
+      "id": 7
+    },
+    {
+      "email": "123@gmail.com",
+      "password": "pbkdf2$10000$f28d5163838686537ca3038c2a6318d4f5455b601c53ef13d19c90e8ee30fac1c32c6716f782e3ff0e1b0c978c65b75e2103e586b628cc1ff0eb49bd7c901fe4$fa1bf961418723d5dec02862edc640c8b163474110c838ef63a4b7c3e8765fea10f7543d23d1aae5bfbfbe904a7582dc248780dc934a98151a564c2d9268c4dd",
+      "name": "123",
+      "id": 8
+    },
+    {
+      "email": "1234@gmail.com",
+      "password": "pbkdf2$10000$e371107c1569ffe57586d8d4bf145c58b34da9b4ff95338469ff269d3133f476b486125e34f8f4c38e0ed526c643e86c3938b86eab4088874be0fc6d3d6048d7$70cfb01152388c5eab77ffe8619a404882a59bbd03849642bccdcd85514e446a517761a79b3f0a1963736e1587864d56505b62fedb39170284b306b19a41b631",
+      "name": "1234",
+      "id": 9
+    },
+    {
+      "email": "burp@gmail.com",
+      "password": "25421d7c7e6fd6aa71f707353cc3408fa1fb316e698136553b0e03eea875a7808670e168300482228307a09504d7fdd4",
+      "name": "burp",
+      "id": 10
+    },
+    {
+      "email": "mother@gmail.com",
+      "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
+      "name": "mother",
+      "id": 11
+    },
+    {
+      "email": "mymother@gmail.com",
+      "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
+      "name": "mymother",
+      "id": 12
     }
   ]
 }

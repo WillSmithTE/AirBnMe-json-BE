@@ -44,7 +44,6 @@ function getUser(email) {
 server.post('/auth/login', (req, res) => {
 
   const { email, password } = req.body;
-  console.error(email, password);
   if (correctLoginDetails(email, password)) {
     const access_token = createToken({ email, password });
     res.status(200).json({ access_token });
