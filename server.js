@@ -45,7 +45,8 @@ function getUser(email) {
   return maybeUserIndex === -1 ? undefined : userdb.users[maybeUserIndex];
 }
 
-server.use(/^(?!\/auth).*$/, (req, res, next) => {
+server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
+  console.error('using');
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     setResError(res, 'Error in authorisation format');
   } else {
@@ -80,19 +81,29 @@ server.post('/auth/register', (req, res) => {
   }
 });
 
-server.post('/listings/new', (req, res) => {
+server.post('/listing/new', (req, res) => {
   if (db.listings === null || db.listings === undefined) {
     db.listings = [];
   }
-  const { id, address, name, description } = req.body;
+  const { id, address, name, description, price } = req.body;
   const listingId = db.listings.length;
-  db.listings.push({ id: listingId, userId: id, name, address, description });
+  db.listings.push({ id: listingId, userId: id, name, address, description, price });
   fs.writeFile(
     DB_FILE_PATH,
     JSON.stringify(db, null, 2),
     JSON_DATA_FORMAT,
     () => res.status(200).json({ listingId, message: 'Listing posted successfully' })
   );
+});
+
+server.get('/listing/:listingId', (req, res) => {
+  const listingId = parseInt(req.params.listingId, 10);
+  const listingIndex = db.listings.findIndex((listing) => listing.id === listingId);
+  if (listingIndex === -1) {
+    setResError(res, `Listing of id ${req.params.listingId} not found`);
+  } else {
+    res.status(200).json(db.listings[listingIndex]);
+  }
 });
 
 
