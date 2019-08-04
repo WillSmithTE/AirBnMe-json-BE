@@ -1,1 +1,168 @@
-{"users":[{"id":62147966.68451797,"name":"dolore anim elit et magna","email":"ad sint deserunt culpa","isAdmin":true,"password":"esse","type":86458003},{"id":52642425.60746589,"name":"enim deserunt nisi","email":"sed a","isAdmin":true,"password":"ad","type":51209206.36793488},{"id":7703291.449332697,"name":"voluptate labore","email":"ut","isAdmin":true,"password":"Excepteur ut consequat ex","type":"proident irure esse"}]}
+{
+  "users": [
+    {
+      "id": 62147966.68451797,
+      "name": "dolore anim elit et magna",
+      "email": "ad sint deserunt culpa",
+      "isAdmin": true,
+      "password": "esse",
+      "type": 86458003
+    },
+    {
+      "id": 52642425.60746589,
+      "name": "enim deserunt nisi",
+      "email": "sed a",
+      "isAdmin": true,
+      "password": "ad",
+      "type": 51209206.36793488
+    },
+    {
+      "id": 7703291.449332697,
+      "name": "voluptate labore",
+      "email": "ut",
+      "isAdmin": true,
+      "password": "Excepteur ut consequat ex",
+      "type": "proident irure esse"
+    }
+  ],
+  "listings": [
+    {
+      "name": "The Palace",
+      "address": "1, Palace Drive, Buckingham, England",
+      "description": "Come stay at my sweet palace. It is quite nice :)"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "adga",
+      "address": "123",
+      "description": "herpderp12"
+    },
+    {
+      "name": "The Hobbit Hole",
+      "address": "1, Hobbiton",
+      "description": "Bit wet"
+    },
+    {
+      "name": "palace",
+      "address": "123 nice road",
+      "description": "nice place"
+    },
+    {
+      "name": "new place",
+      "address": "123 place gmail",
+      "description": "herpaderpperp"
+    },
+    {
+      "name": "new place",
+      "address": "123 derp",
+      "description": "asfasgdadgag"
+    },
+    {
+      "name": "place",
+      "address": "123 place 123",
+      "description": "new place123"
+    },
+    {
+      "name": "hera",
+      "address": "123 derp",
+      "description": "herpaderpa"
+    },
+    {
+      "name": "herp",
+      "address": "124 piagda",
+      "description": "hewrpapiaa"
+    },
+    {
+      "name": "oiaghdoaihgiadh",
+      "address": "oighdaoighadoihgadogadd",
+      "description": "gdlagnadngadoig"
+    },
+    {
+      "name": "oiahgdoiahgoi",
+      "address": "aoidghaodiga",
+      "description": "oighadoighaoidhga"
+    },
+    {
+      "userId": 13,
+      "name": "aigdja",
+      "address": "goaid",
+      "description": "lgandgliadngai"
+    },
+    {
+      "id": 26,
+      "userId": 13,
+      "name": "dgangaodng",
+      "address": "10ih3018h34012",
+      "description": "oagindoiangoiadgoia"
+    }
+  ]
+}

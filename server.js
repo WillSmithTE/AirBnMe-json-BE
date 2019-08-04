@@ -7,8 +7,12 @@ const server = jsonServer.create()
 const router = jsonServer.router('./database.json')
 
 const USERS_FILE_PATH = './users.json';
+const DB_FILE_PATH = './db.json';
 const JSON_DATA_FORMAT = 'UTF-8';
-const userdb = JSON.parse(fs.readFileSync(USERS_FILE_PATH, JSON_DATA_FORMAT))
+
+const userdb = JSON.parse(fs.readFileSync(USERS_FILE_PATH, JSON_DATA_FORMAT));
+
+const db = JSON.parse(fs.readFileSync(DB_FILE_PATH, JSON_DATA_FORMAT));
 
 const ERROR_CODE = 401;
 
@@ -16,7 +20,7 @@ server.use(jsonServer.defaults(), jsonServer.bodyParser);
 
 const SECRET_KEY = '9707500312';
 
-const expiresIn = '1h';
+const expiresIn = '365d';
 
 function setResError(res, message) {
   res.status(ERROR_CODE).json({ 'status': ERROR_CODE, message });
@@ -27,12 +31,13 @@ function createToken(payload) {
 }
 
 function verifyToken(token) {
-  return jwt.verify(token, SECRET_KEY, (err, decode) => decode !== undefined ? decode : err)
+  return jwt.verify(token, SECRET_KEY);
 }
 
-function correctLoginDetails(email, password) {
+function userIdOrUndefined(email, password) {
   const maybeUser = getUser(email);
-  return maybeUser !== undefined && maybeUser.password === password;
+  return maybeUser !== undefined && maybeUser.password === password ?
+    maybeUser.id : undefined;
 }
 
 function getUser(email) {
@@ -40,17 +45,28 @@ function getUser(email) {
   return maybeUserIndex === -1 ? undefined : userdb.users[maybeUserIndex];
 }
 
+server.use(/^(?!\/auth).*$/, (req, res, next) => {
+  if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
+    setResError(res, 'Error in authorisation format');
+  } else {
+    try {
+      const payload = verifyToken(req.headers.authorization.split(' ')[1]);
+      req.body.id = payload.id;
+      next();
+    } catch (err) {
+      setResError(res, `Authentication error - ${err.message}`);
+    }
+  }
+});
 
 server.post('/auth/login', (req, res) => {
-
   const { email, password } = req.body;
-  if (correctLoginDetails(email, password)) {
-    const access_token = createToken({ email, password });
-    res.status(200).json({ access_token });
+  const maybeUserId = userIdOrUndefined(email, password);
+  if (maybeUserId === undefined) {
+    setResError(res, 'Incorrect login credentials');
   } else {
-    const status = 401;
-    const message = 'Incorrect email or password';
-    res.status(status).json({ status, message });
+    const access_token = createToken({ email, password, id: maybeUserId });
+    res.status(200).json({ access_token });
   }
 });
 
@@ -64,25 +80,24 @@ server.post('/auth/register', (req, res) => {
   }
 });
 
-server.use(/^(?!\/auth).*$/, (req, res, next) => {
-  if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
-    const status = 401
-    const message = 'Error in authorization format'
-    res.status(status).json({ status, message })
-    return
+server.post('/listings/new', (req, res) => {
+  if (db.listings === null || db.listings === undefined) {
+    db.listings = [];
   }
-  try {
-    verifyToken(req.headers.authorization.split(' ')[1])
-    next()
-  } catch (err) {
-    const status = 401
-    const message = 'Error access_token is revoked'
-    res.status(status).json({ status, message })
-  }
-})
+  const { id, address, name, description } = req.body;
+  const listingId = db.listings.length;
+  db.listings.push({ id: listingId, userId: id, name, address, description });
+  fs.writeFile(
+    DB_FILE_PATH,
+    JSON.stringify(db, null, 2),
+    JSON_DATA_FORMAT,
+    () => res.status(200).json({ listingId, message: 'Listing posted successfully' })
+  );
+});
 
-server.use(router)
+
+server.use(router);
 
 server.listen(8080, () => {
   console.log('Server Online')
-})
+});

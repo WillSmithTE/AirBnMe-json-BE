@@ -77,6 +77,18 @@
       "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
       "name": "mymother",
       "id": 12
+    },
+    {
+      "email": "email123@gmail.com",
+      "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
+      "name": "me",
+      "id": 13
+    },
+    {
+      "email": "NEWUSER@gmail.com",
+      "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
+      "name": "NEW USER",
+      "id": 14
     }
   ]
 }
