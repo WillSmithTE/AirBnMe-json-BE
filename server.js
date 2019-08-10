@@ -10,10 +10,6 @@ const USERS_FILE_PATH = './users.json';
 const DB_FILE_PATH = './db.json';
 const JSON_DATA_FORMAT = 'UTF-8';
 
-const userdb = JSON.parse(fs.readFileSync(USERS_FILE_PATH, JSON_DATA_FORMAT));
-
-const db = JSON.parse(fs.readFileSync(DB_FILE_PATH, JSON_DATA_FORMAT));
-
 const ERROR_CODE = 401;
 
 server.use(jsonServer.defaults(), jsonServer.bodyParser);
@@ -35,14 +31,24 @@ function verifyToken(token) {
 }
 
 function userIdOrUndefined(email, password) {
-  const maybeUser = getUser(email);
+  const maybeUser = getUser(email, userdb);
   return maybeUser !== undefined && maybeUser.password === password ?
     maybeUser.id : undefined;
 }
 
-function getUser(email) {
+function getUser(email, userdb) {
+
   const maybeUserIndex = userdb.users.findIndex((user) => user.email === email);
   return maybeUserIndex === -1 ? undefined : userdb.users[maybeUserIndex];
+}
+
+function sortByReview(listings) {
+  return listings.sort((a, b) => b.score - a.score);
+}
+
+function skipTakeListings(listings, skip, take) {
+  const initIndex = skip * take;
+  return listings.splice(initIndex, initIndex + take);
 }
 
 server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
@@ -61,8 +67,10 @@ server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
 });
 
 server.post('/auth/login', (req, res) => {
+  const userdb = JSON.parse(fs.readFileSync(USERS_FILE_PATH, JSON_DATA_FORMAT));
+
   const { email, password } = req.body;
-  const maybeUserId = userIdOrUndefined(email, password);
+  const maybeUserId = userIdOrUndefined(email, password, userdb);
   if (maybeUserId === undefined) {
     setResError(res, 'Incorrect login credentials');
   } else {
@@ -72,8 +80,9 @@ server.post('/auth/login', (req, res) => {
 });
 
 server.post('/auth/register', (req, res) => {
+  const userdb = JSON.parse(fs.readFileSync(USERS_FILE_PATH, JSON_DATA_FORMAT));
   const { email, password, name } = req.body;
-  if (getUser(email) === undefined) {
+  if (getUser(email, userdb) === undefined) {
     userdb.users.push({ email, password, name, id: userdb.users.length });
     fs.writeFile(USERS_FILE_PATH, JSON.stringify(userdb, null, 2), JSON_DATA_FORMAT, () => res.status(200).json({ message: 'Registration success' }));
   } else {
@@ -82,6 +91,8 @@ server.post('/auth/register', (req, res) => {
 });
 
 server.post('/listing/new', (req, res) => {
+  const db = JSON.parse(fs.readFileSync(DB_FILE_PATH, JSON_DATA_FORMAT));
+
   if (db.listings === null || db.listings === undefined) {
     db.listings = [];
   }
@@ -97,15 +108,28 @@ server.post('/listing/new', (req, res) => {
 });
 
 server.get('/listing/:listingId', (req, res) => {
+  const db = JSON.parse(fs.readFileSync(DB_FILE_PATH, JSON_DATA_FORMAT));
+
   const listingId = parseInt(req.params.listingId, 10);
-  const listingIndex = db.listings.findIndex((listing) => listing.id === listingId);
-  if (listingIndex === -1) {
+  const listing = db.listings.find((listing) => listing.id === listingId);
+  if (listing === undefined) {
     setResError(res, `Listing of id ${req.params.listingId} not found`);
   } else {
-    res.status(200).json(db.listings[listingIndex]);
+    res.status(200).json(listing);
   }
 });
 
+server.get('/listing', (req, res) => {
+  const db = JSON.parse(fs.readFileSync(DB_FILE_PATH, JSON_DATA_FORMAT));
+
+  const query = req.query;
+  const take = query.take;
+  const skip = query.skip;
+  const search = query.search;
+  const listings = db.listings;
+  const sortedListings = sortByReview(listings);
+  res.status(200).json(skipTakeListings(sortedListings, skip, take));
+});
 
 server.use(router);
 
