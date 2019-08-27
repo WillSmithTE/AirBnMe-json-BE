@@ -1,10 +1,10 @@
-const fs = require('fs')
-const bodyParser = require('body-parser')
-const jsonServer = require('json-server')
-const jwt = require('jsonwebtoken')
+const fs = require('fs');
+const jsonServer = require('json-server');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
-const server = jsonServer.create()
-const router = jsonServer.router('./database.json')
+const server = jsonServer.create();
+const router = jsonServer.router('./database.json');
 
 const USERS_FILE_PATH = './users.json';
 const DB_FILE_PATH = './db.json';
@@ -12,6 +12,7 @@ const JSON_DATA_FORMAT = 'UTF-8';
 
 const ERROR_CODE = 401;
 
+server.use(cors());
 server.use(jsonServer.defaults(), jsonServer.bodyParser);
 
 const SECRET_KEY = '9707500312';

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/cors": "^2.8.6",
+    "cors": "^2.8.5",
     "json-schema-faker": "^0.5.0-rc17",
     "json-server": "^0.15.0",
     "jsonwebtoken": "^8.5.1"
