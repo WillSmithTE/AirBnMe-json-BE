@@ -149,6 +149,6 @@ server.get('/auth/verifyToken/:token', (req, res) => {
 
 server.use(router);
 
-server.listen(8080, () => {
+server.listen(process.env.PORT || 8080, () => {
   console.log('Server Online')
 });
