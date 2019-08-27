@@ -59,7 +59,6 @@ server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
   } else {
     try {
       const payload = getUnpackedTokenOrThrow(req.headers.authorization.split(' ')[1]);
-      res.header('Access-Control-Allow-Origin', '*');
       res.status(200).json({ id: payload.id });
       next();
     } catch (err) {
@@ -77,7 +76,6 @@ server.post('/auth/login', (req, res) => {
     setResError(res, 'Incorrect login credentials');
   } else {
     const accessToken = createToken({ email, password, id: maybeUserId });
-    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({ accessToken, userId: maybeUserId });
   }
 });
@@ -89,7 +87,6 @@ server.post('/auth/register', (req, res) => {
     userdb.users.push({ email, password, name, id: userdb.users.length });
     fs.writeFile(USERS_FILE_PATH, JSON.stringify(userdb, null, 2), JSON_DATA_FORMAT, () => res.status(200).json({ message: 'Registration success' }));
   } else {
-    res.header('Access-Control-Allow-Origin', '*');
     setResError(res, 'Email taken');
   }
 });
@@ -119,7 +116,6 @@ server.get('/listing/:listingId', (req, res) => {
   if (listing === undefined) {
     setResError(res, `Listing of id ${req.params.listingId} not found`);
   } else {
-    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json(listing);
   }
 });
@@ -132,13 +128,11 @@ server.get('/listing', (req, res) => {
   const skip = query.skip;
   const listings = db.listings;
   const sortedListings = sortByReview(listings);
-  res.header('Access-Control-Allow-Origin', '*');
   res.status(200).json(skipTakeListings(sortedListings, skip, take));
 });
 
 server.get('/auth/verifyToken/:token', (req, res) => {
   const token = req.params.token;
-  res.header('Access-Control-Allow-Origin', '*');
   try {
     const unpackedToken = getUnpackedTokenOrThrow(token);
     res.status(200).json({ userId: unpackedToken.id });
