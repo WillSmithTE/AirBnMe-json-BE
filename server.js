@@ -26,11 +26,11 @@ function createToken(payload) {
   return jwt.sign(payload, SECRET_KEY, { expiresIn })
 }
 
-function verifyToken(token) {
+function getUnpackedTokenOrThrow(token) {
   return jwt.verify(token, SECRET_KEY);
 }
 
-function userIdOrUndefined(email, password) {
+function userIdOrUndefined(email, password, userdb) {
   const maybeUser = getUser(email, userdb);
   return maybeUser !== undefined && maybeUser.password === password ?
     maybeUser.id : undefined;
@@ -57,8 +57,9 @@ server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
     setResError(res, 'Error in authorisation format');
   } else {
     try {
-      const payload = verifyToken(req.headers.authorization.split(' ')[1]);
-      req.body.id = payload.id;
+      const payload = getUnpackedTokenOrThrow(req.headers.authorization.split(' ')[1]);
+      res.header('Access-Control-Allow-Origin', '*');
+      res.status(200).json({ id: payload.id });
       next();
     } catch (err) {
       setResError(res, `Authentication error - ${err.message}`);
@@ -74,8 +75,9 @@ server.post('/auth/login', (req, res) => {
   if (maybeUserId === undefined) {
     setResError(res, 'Incorrect login credentials');
   } else {
-    const access_token = createToken({ email, password, id: maybeUserId });
-    res.status(200).json({ access_token });
+    const accessToken = createToken({ email, password, id: maybeUserId });
+    res.header('Access-Control-Allow-Origin', '*');
+    res.status(200).json({ accessToken, userId: maybeUserId });
   }
 });
 
@@ -86,6 +88,7 @@ server.post('/auth/register', (req, res) => {
     userdb.users.push({ email, password, name, id: userdb.users.length });
     fs.writeFile(USERS_FILE_PATH, JSON.stringify(userdb, null, 2), JSON_DATA_FORMAT, () => res.status(200).json({ message: 'Registration success' }));
   } else {
+    res.header('Access-Control-Allow-Origin', '*');
     setResError(res, 'Email taken');
   }
 });
@@ -115,6 +118,7 @@ server.get('/listing/:listingId', (req, res) => {
   if (listing === undefined) {
     setResError(res, `Listing of id ${req.params.listingId} not found`);
   } else {
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json(listing);
   }
 });
@@ -125,10 +129,21 @@ server.get('/listing', (req, res) => {
   const query = req.query;
   const take = query.take;
   const skip = query.skip;
-  const search = query.search;
   const listings = db.listings;
   const sortedListings = sortByReview(listings);
+  res.header('Access-Control-Allow-Origin', '*');
   res.status(200).json(skipTakeListings(sortedListings, skip, take));
+});
+
+server.get('/auth/verifyToken/:token', (req, res) => {
+  const token = req.params.token;
+  res.header('Access-Control-Allow-Origin', '*');
+  try {
+    const unpackedToken = getUnpackedTokenOrThrow(token);
+    res.status(200).json({ userId: unpackedToken.id });
+  } catch (error) {
+    setResError(res, error);
+  }
 });
 
 server.use(router);
