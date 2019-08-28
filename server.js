@@ -51,6 +51,17 @@ function skipTakeListings(listings, skip, take) {
   return listings.splice(initIndex, initIndex + take);
 }
 
+function listingMatchesSearch(listing, searchTerm) {
+  const name = listing.name;
+  const description = listing.description;
+  for (property of [name.toLowerCase(), description.toLowerCase()]) {
+    if (property.includes(searchTerm.toLowerCase())) {
+      return true;
+    }
+  }
+  return false;
+}
+
 server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     setResError(res, 'Error in authorisation format');
@@ -71,7 +82,7 @@ server.post('/auth/login', (req, res) => {
   const { email, password } = req.body;
   const maybeUserId = userIdOrUndefined(email, password, userdb);
   if (maybeUserId === undefined) {
-    setResError(res, 'Incorrect login credentials');
+    setResError(res, 'Invalid login credentials');
   } else {
     const accessToken = createToken({ email, password, id: maybeUserId });
     res.status(200).json({ accessToken, userId: maybeUserId });
@@ -95,7 +106,7 @@ server.post('/listing/new', (req, res) => {
   if (db.listings === null || db.listings === undefined) {
     db.listings = [];
   }
-  const { userId,  address, name, description, price } = req.body;
+  const { userId, address, name, description, price } = req.body;
   const listingId = db.listings.length;
   db.listings.push({ id: listingId, userId, name, address, description, price });
   fs.writeFile(
@@ -124,7 +135,11 @@ server.get('/listing', (req, res) => {
   const query = req.query;
   const take = query.take;
   const skip = query.skip;
-  const listings = db.listings;
+  const searchTerm = query.searchTerm;
+  let listings = db.listings;
+  if (searchTerm !== undefined && searchTerm !== null) {
+    listings = listings.filter((listing) => listingMatchesSearch(listing, searchTerm));
+  }
   const sortedListings = sortByReview(listings);
   res.status(200).json(skipTakeListings(sortedListings, skip, take));
 });

@@ -89,6 +89,12 @@
       "password": "38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b",
       "name": "NEW USER",
       "id": 14
+    },
+    {
+      "email": "badguy@gmail.com",
+      "password": "5c6029d0611be2d589e386fe6b62c4e38d8b1766318074ab6fc1de6b77471ce4765083f9ec518f06637e640d7a7577e8",
+      "name": "bad guy",
+      "id": 15
     }
   ]
 }
