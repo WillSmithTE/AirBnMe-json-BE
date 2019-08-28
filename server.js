@@ -12,8 +12,7 @@ const JSON_DATA_FORMAT = 'UTF-8';
 
 const ERROR_CODE = 401;
 
-server.use(cors());
-server.use(jsonServer.defaults(), jsonServer.bodyParser);
+server.use(jsonServer.defaults(), jsonServer.bodyParser, cors());
 
 const SECRET_KEY = '9707500312';
 
@@ -53,13 +52,12 @@ function skipTakeListings(listings, skip, take) {
 }
 
 server.use(/^(\/listing\/new)|(\/user).*$/, (req, res, next) => {
-  console.error('using');
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     setResError(res, 'Error in authorisation format');
   } else {
     try {
       const payload = getUnpackedTokenOrThrow(req.headers.authorization.split(' ')[1]);
-      res.status(200).json({ id: payload.id });
+      req.body.userId = payload.id;
       next();
     } catch (err) {
       setResError(res, `Authentication error - ${err.message}`);
@@ -97,9 +95,9 @@ server.post('/listing/new', (req, res) => {
   if (db.listings === null || db.listings === undefined) {
     db.listings = [];
   }
-  const { id, address, name, description, price } = req.body;
+  const { userId,  address, name, description, price } = req.body;
   const listingId = db.listings.length;
-  db.listings.push({ id: listingId, userId: id, name, address, description, price });
+  db.listings.push({ id: listingId, userId, name, address, description, price });
   fs.writeFile(
     DB_FILE_PATH,
     JSON.stringify(db, null, 2),
