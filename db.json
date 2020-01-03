@@ -27,60 +27,20 @@
   ],
   "listings": [
     {
-      "id": 0,
-      "name": "Extended",
-      "description": "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
-      "email": "tselvester0@si.edu",
-      "price": 85,
-      "score": 5,
-      "userId": 32,
-      "address": "4 Stang Plaza"
-    },
-    {
-      "id": 1,
-      "name": "middleware",
-      "description": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.\n\nIn congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.",
-      "email": "cgammet1@tripadvisor.com",
-      "price": 53,
-      "score": 3.2,
-      "userId": 33,
-      "address": "4 Linden Place"
-    },
-    {
-      "id": 2,
-      "name": "workforce",
-      "description": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
-      "email": "cwaldram2@squarespace.com",
-      "price": 84,
-      "score": 4,
-      "userId": 32,
-      "address": "218 Maple Wood Way"
-    },
-    {
-      "id": 3,
-      "name": "even-keeled",
-      "description": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
-      "email": "cvesco3@theglobeandmail.com",
-      "price": 88,
-      "score": 3.7,
-      "userId": 33,
-      "address": "58 Westerfield Crossing"
-    },
-    {
       "id": 4,
       "userId": 13,
       "name": "The Palace",
-      "address": "Buckingham Road, Palace Town",
+      "address": "Buckingham Road, England",
       "description": "It's a big palace with a Queen",
       "price": "2000"
     },
     {
       "id": 5,
       "userId": 13,
-      "name": "herpaderp",
-      "address": "25 lindfield avenue",
-      "description": "big palceagdoina",
-      "price": "2000"
+      "name": "My place",
+      "address": "25 Lindfield Avenue, Lindfield, Sydney, Australia",
+      "description": "Homey family house.",
+      "price": "20"
     }
   ]
 }
